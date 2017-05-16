@@ -6,36 +6,79 @@
     </head>
     <body>
         <h1>Welcome to web3 - looking like web1!</h1>
-        <div id="content">Can I Have web3?!</div>
-        Contract Address: <div id="ContractAddress"> </div>
-        Contract Balance: <div id="ContractBalance"> </div>
-
-        My Address: <div id="MyAddress"> </div>
-        My Balance: <div id="MyBalance"> </div>
-        
-        <img src="./ani_what.gif" alt="Everyone Wants to be Make ICO" width="300" height="50" border="0">
+        <div id="content">Can I has web3?!</div>
+        Address of the ico contract: <div id="contractAddress"></div>
+        you address: <div id="yourAddress"></div>
+        contract balance: <div id="contractBalance"></div>
+        current balance: <div id="yourBalance"></div>
+        <img src="./ani_what.gif" alt="WHATEVER MAKES YOU HAPPY" width="300" height="50" border="0">
         <script>
             window.addEventListener('load', function() {
-
             // Checking if Web3 has been injected by the browser (Mist/MetaMask)
             if (typeof web3 !== 'undefined') {
                 // Use Mist/MetaMask's provider
-                $('#content').text('I have web3 ICO!!!');
+                $('#content').text('I has web3!!!');
                 window.web3 = new Web3(web3.currentProvider);
             } else {
-                $('#content').text('I don\'t have web3 :(')
+                $('#content').text('I doesn\'t has web3 :(')
                 console.log('No web3? You should consider trying MetaMask!')
                 // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
                 window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
             }
             var contractAddress = "0xF5A1543FD8c29c4538F57ABcd747abeFF4d74a3F";
-            $("#ContractAddress").text(contractAddress);
+            $("#contractAddress").text(contractAddress);
                 
             web3.eth.getBalance(contractAddress,function(error,response) {
-                $("#ContractBalance").text(response);
+                $("#contractBalance").text(response);
                 console.log("error: " + error + ", " + "response: " + response);
             }
-        })
+            // Now you can start your app & access web3 freely:
+            // do whatever you want to here!
+            /*
+            contract ICO {
+    
+    mapping(address => uint) public balanceOf;
+    
+    uint public priceWeiPerToken = 10;
+    
+    address public owner;
+    
+    function ICO() {
+        owner = msg.sender;
+    }
+    
+    // helper function
+    function getMyAddress() constant returns (address) {
+        return msg.sender;
+    }   
+    
+    function transfer(address _to, uint _value) {
+        if (_value <= balanceOf[msg.sender]) {
+            balanceOf[_to] += _value;
+            balanceOf[msg.sender] -= _value;
+        } else {
+            throw;
+        }
+    }
+    
+    function buyToken() payable {
+        balanceOf[msg.sender] += msg.value / priceWeiPerToken ;
+    } 
+    
+    function payOutBalance() {
+        if (msg.sender != owner)
+            throw;
+        owner.send(this.balance);
+    }
+    
+    function getMyBalanceEther() constant returns (uint) {
+        return msg.sender.balance / 1 ether;
+    }
+    
+}
+           */                        
+            
+            })
         </script>
     </body>
 </html>
